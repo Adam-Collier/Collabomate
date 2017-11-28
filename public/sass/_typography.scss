@@ -1,0 +1,61 @@
+body{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+h1{
+  font-size: 2.441em;
+  font-weight: 600;
+}
+
+h2{
+  font-size: 1.953em;
+  font-weight: 600;
+}
+
+h3{
+  font-size: 1.563em;
+  font-weight: 600;
+}
+
+h4{
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+h5{
+  font-size: 1em;
+  font-weight: 600;
+}
+
+p{
+  font-size: 1em;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+hr{
+  margin: 0px 0px 40px 0px;
+  border: none;
+  color: #000000;
+  background-color: #000000;
+  height: 1px;
+}
+
+button{
+  display: inline-block;
+  background: #FFFFFF;
+  border: 1px solid rgb(209, 209, 209);
+  border-radius: 2px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+input{
+  display: block;
+}
+
+#delete{
+  background: rgb(251, 65, 65);
+  color: #FFFFFF;
+  border: none;
+}

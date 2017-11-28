@@ -1,0 +1,62 @@
+.profile{
+  padding: 20px 50px;
+  width: 600px;
+  margin: 0 auto;
+  border-left: 1px solid rgb(211, 211, 211);
+}
+.container > h1{
+  width: 90%;
+  padding-left: 24px;
+  margin-bottom: 30px;
+}
+.profile > div{
+  width: 500px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+.profile label{
+  display: flex;
+  margin-bottom: 6px;
+}
+.profile input{
+  padding: 10px 10px;
+  font-size: 18px;
+  border-radius: 2px;
+  border: 1px solid rgb(209, 209, 209);
+  margin: 0 0 12px 0;
+  width: calc(100% - 22px);
+}
+.gravatar{
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  display: block;
+}
+.addProject{
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding: 8px 100px 40px 100px;
+  margin-bottom: 50px;
+  border-radius: 5px;
+  background: #fdfdfd;
+}
+.addProject input[type=text]{
+  padding: 10px 10px;
+  font-size: 18px;
+  border-radius: 2px;
+  border: 1px solid rgb(209, 209, 209);
+  margin: 0px;
+  width: calc(100% - 22px);
+}
+.addProject input[type=radio], .addProject p{
+  display: inline-block;
+  margin-right: 10px;
+}
+.addProject textarea{
+  width: calc(100% - 22px);
+  padding: 0px;
+  padding: 10px 10px;
+  font-size: 14px;
+  border-radius: 2px;
+  border: 1px solid rgb(209, 209, 209);
+  min-height: 80px;
+  margin-bottom: 30px;
+}

@@ -76,6 +76,9 @@ app.post('/signup', [
   sanitize('email').normalizeEmail()
 ], users.signupPost)
 
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email profile repo'] }));
+app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/login' }));
+
 app.get('/logout', users.logout);
 
 app.get('/api', api.api);
@@ -83,6 +86,9 @@ app.get('/api', api.api);
 app.get('/profile', users.ensureAuthenticated, users.profile);
 app.post('/profile', users.ensureAuthenticated, users.profilePost);
 app.put('/profile', users.ensureAuthenticated, users.profilePut);
+app.delete('/profile', users.ensureAuthenticated, users.profileDelete);
+
+app.get('/delete/:projectUrl', users.ensureAuthenticated, users.deleteProject);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

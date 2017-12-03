@@ -1,6 +1,6 @@
-var app = (function(){
+var app = (function () {
   return {
-    fetchAPI: function(){
+    fetchAPI: function () {
       fetch('/api').then(function (response) {
         return response.json()
       }).then(function (projects) {
@@ -47,7 +47,6 @@ var app = (function(){
             var readme = this.parentElement.parentElement;
             // readme.nextElementSibling.classList.toggle('accordian')
             this.nextElementSibling.classList.toggle('arrow')
-
             if (readme.nextElementSibling.style.maxHeight) {
               readme.nextElementSibling.style.maxHeight = null;
             } else {
@@ -58,6 +57,11 @@ var app = (function(){
       }).catch(function (err) {
         document.querySelector('.projects').innerHTML = "api not responding";
       })
+    },
+    inputFocus: function (login) {
+      setTimeout(() => {
+        login.parentElement.querySelector('input#email').focus();
+      }, 100);
     }
   }
 })();

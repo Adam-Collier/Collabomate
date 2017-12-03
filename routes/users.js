@@ -140,4 +140,31 @@ exports.profilePut = function (req, res, next) {
   });
 };
 
+/**
+ * DELETE /profile
+ */
+exports.profileDelete = function (req, res, next) {
+  User.remove({ _id: req.user.id }, function (err) {
+    req.logout();
+    req.flash('info', { msg: 'Your account has been permanently deleted.' });
+    res.redirect('/');
+  });
+};
+
+// DELETE profile project
+exports.deleteProject = function(req, res){
+  User.findById(req.user.id, function (err, user) {
+    user.projects.forEach(function(obj, i){
+      if(obj.project == req.params.projectUrl){
+        user.projects[i].remove();
+      }
+    });
+    console.log(user);
+    user.save(function (err) {
+      res.redirect('/profile');
+    })
+  })
+}
+
+
 

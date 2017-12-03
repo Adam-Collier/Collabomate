@@ -72,6 +72,8 @@ passport.use(new GithubStrategy({
             picture: profile._json.avatar_url,
             github: profile.id
           });
+          console.log(profile);
+          console.log(newUser);
           newUser.save(function (err) {
             done(err, newUser);
           });

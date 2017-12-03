@@ -426,7 +426,8 @@ input {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   padding: 0px 40px 0px 10px;
   height: 55px;
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  user-select: none; }
 
 .header ul {
   list-style-type: none;
@@ -530,12 +531,15 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: calc(100vh - 200px); }
+
+.signup-form {
+  padding-top: 10px;
   width: 372px;
-  height: calc(100vh - 104px);
   margin: 0 auto; }
-  .signup h2 {
+  .signup-form h2 {
     align-self: flex-start; }
-  .signup p {
+  .signup-form p {
     align-self: flex-start;
     margin: 0; }
 
@@ -570,7 +574,7 @@ input {
   padding: 10px 14px;
   cursor: pointer;
   font-size: 20px;
-  margin-bottom: 20px; }
+  margin-bottom: 30px; }
 
 .markdown-body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -931,6 +935,14 @@ input {
 .project * {
   margin: 0px; }
 
+.del-project {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  top: 10px;
+  right: 10px;
+  cursor: pointer; }
+
 .project > div:not(:last-child) {
   display: flex;
   justify-content: space-between;
@@ -952,7 +964,7 @@ input {
   margin-bottom: 0px; }
 
 .project .level {
-  padding-top: 5px; }
+  padding-top: 19px; }
 
 .project > div:nth-of-type(2) {
   flex-direction: column; }
@@ -977,7 +989,7 @@ input {
   display: flex;
   cursor: pointer; }
 
-.project svg {
+.readme ~ svg {
   width: 8px;
   padding: 1px 0px 0px 10px;
   transition: all 300ms ease-in-out; }
@@ -1063,7 +1075,8 @@ input {
   border-radius: 2px;
   border: 1px solid #d1d1d1;
   min-height: 80px;
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  resize: none; }
 
 .text-success {
   color: #29b35b; }

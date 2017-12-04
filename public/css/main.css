@@ -410,6 +410,9 @@ button {
 input {
   display: block; }
 
+::placeholder {
+  color: #a0a0a0; }
+
 #delete {
   background: #fb4141;
   color: #FFFFFF;

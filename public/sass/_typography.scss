@@ -54,6 +54,10 @@ input{
   display: block;
 }
 
+::placeholder{
+  color: rgb(160, 160, 160);
+}
+
 #delete{
   background: rgb(251, 65, 65);
   color: #FFFFFF;

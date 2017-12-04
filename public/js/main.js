@@ -45,8 +45,8 @@ var app = (function () {
         document.querySelectorAll('.readme').forEach(function (x) {
           x.addEventListener('click', function () {
             var readme = this.parentElement.parentElement;
-            // readme.nextElementSibling.classList.toggle('accordian')
             this.nextElementSibling.classList.toggle('arrow')
+
             if (readme.nextElementSibling.style.maxHeight) {
               readme.nextElementSibling.style.maxHeight = null;
             } else {

@@ -20,7 +20,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, function (email, pass
     if (!user) {
       return done(null, false, {
         msg: 'The email address ' + email + ' is not associated with any account. ' +
-        'Double-check your email address and try again.'
+          'Double-check your email address and try again.'
       });
     }
     user.comparePassword(password, function (err, isMatch) {

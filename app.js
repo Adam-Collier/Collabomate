@@ -55,6 +55,8 @@ app.use(passport.session());
 app.use(function (req, res, next) {
   res.locals.user = req.user;
   res.locals.path = req.path;
+  var referer = req.headers.referer.split('/');
+  res.locals.referer = referer[referer.length - 1];
   // res.locals.userProjects = ;
   next();
 });

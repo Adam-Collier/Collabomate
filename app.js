@@ -57,12 +57,6 @@ app.use(function (req, res, next) {
   res.locals.user = req.user;
   res.locals.path = req.path;
   res.locals.url = req.originalUrl;
-  console.log(req.originalUrl);
-  // console.log(req.headers.referer)
-  // if (req.headers.referer !== undefined){
-  //   res.locals.referer = url.parse(req.headers.referer).pathname;
-  // }
-  // res.locals.userProjects = ;
   next();
 });
 
@@ -91,7 +85,10 @@ app.get('/logout', users.logout);
 app.get('/api', api.api);
 
 app.get('/profile', users.ensureAuthenticated, users.profile);
-app.post('/profile', users.ensureAuthenticated, users.profilePost);
+app.post('/profile', users.ensureAuthenticated, [
+  check('project', 'Github URL must be entered correctly').matches(/^https:\/\/github.com/),
+  check('comment', 'Comment cannot be blank').isLength({ min: 1 })
+], users.profilePost);
 app.put('/profile', users.ensureAuthenticated, users.profilePut);
 app.delete('/profile', users.ensureAuthenticated, users.profileDelete);
 

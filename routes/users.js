@@ -99,6 +99,15 @@ exports.profile = function (req, res){
 
 // POST profile
 exports.profilePost = function(req, res){
+
+  var errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    req.flash('error', errors.array());
+    return res.redirect('/profile');
+  }
+
   console.log(req.body);
   req.user.projects.push({
     project: req.body.project,

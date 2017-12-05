@@ -21,7 +21,7 @@ div.header
           label(for="login" onclick="app.inputFocus(this)") Login
           if messages.error
             input#login(type="checkbox" checked)
-          if referer == 'signup'
+          if url == '/?home'
             input#login(type="checkbox" checked)
           else
             input#login(type="checkbox")

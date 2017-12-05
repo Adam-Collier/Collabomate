@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var url = require("url");
 // var favicon = require('serve-favicon');
 var logger = require('morgan');
 var dotenv = require('dotenv');
@@ -55,8 +56,12 @@ app.use(passport.session());
 app.use(function (req, res, next) {
   res.locals.user = req.user;
   res.locals.path = req.path;
-  var referer = req.headers.referer.split('/');
-  res.locals.referer = referer[referer.length - 1];
+  res.locals.url = req.originalUrl;
+  console.log(req.originalUrl);
+  // console.log(req.headers.referer)
+  // if (req.headers.referer !== undefined){
+  //   res.locals.referer = url.parse(req.headers.referer).pathname;
+  // }
   // res.locals.userProjects = ;
   next();
 });

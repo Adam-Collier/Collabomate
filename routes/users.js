@@ -97,32 +97,6 @@ exports.profile = function (req, res){
   })
 }
 
-// POST profile
-exports.profilePost = function(req, res){
-
-  var errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    console.log(errors);
-    req.flash('error', errors.array());
-    return res.redirect('/profile');
-  }
-
-  console.log(req.body);
-  req.user.projects.push({
-    project: req.body.project,
-    difficulty: req.body.difficulty,
-    comment: req.body.comment
-  })
-  req.user.save(function (err) {
-    if (err) return console.log(err);
-    else {
-      console.log("success!!!");
-      res.redirect('back');
-    }
-  });
-}
-
 // PUT /profile
 // update profile information or password
 exports.profilePut = function (req, res, next) {
@@ -160,6 +134,40 @@ exports.profileDelete = function (req, res, next) {
   });
 };
 
+// GET /projects
+exports.projects = function (req, res) {
+  api.userProjects(req, res).then(function (data) {
+    res.locals.projects = data;
+    res.render('projects');
+  })
+}
+
+// POST projects
+exports.projectsPost = function(req, res){
+
+  var errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    req.flash('error', errors.array());
+    return res.redirect('/projects');
+  }
+
+  console.log(req.body);
+  req.user.projects.push({
+    project: req.body.project,
+    difficulty: req.body.difficulty,
+    comment: req.body.comment
+  })
+  req.user.save(function (err) {
+    if (err) return console.log(err);
+    else {
+      console.log("success!!!");
+      res.redirect('back');
+    }
+  });
+}
+
 // DELETE profile project
 exports.deleteProject = function(req, res){
   User.findById(req.user.id, function (err, user) {
@@ -168,9 +176,8 @@ exports.deleteProject = function(req, res){
         user.projects[i].remove();
       }
     });
-    console.log(user);
     user.save(function (err) {
-      res.redirect('/profile');
+      res.redirect('/projects');
     })
   })
 }

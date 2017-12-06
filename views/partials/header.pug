@@ -11,6 +11,8 @@ div.header
           img.avatar(src=user.gravatar)
         | <span> #{user.name || user.email || user.id} </span>
       li
+        a(href='/projects') My Projects
+      li
         a(href='/profile') Profile
       li
         a(href='/logout') Logout

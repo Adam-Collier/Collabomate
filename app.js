@@ -85,12 +85,14 @@ app.get('/logout', users.logout);
 app.get('/api', api.api);
 
 app.get('/profile', users.ensureAuthenticated, users.profile);
-app.post('/profile', users.ensureAuthenticated, [
-  check('project', 'Github URL must be entered correctly').matches(/^https:\/\/github.com/),
-  check('comment', 'Comment cannot be blank').isLength({ min: 1 })
-], users.profilePost);
 app.put('/profile', users.ensureAuthenticated, users.profilePut);
 app.delete('/profile', users.ensureAuthenticated, users.profileDelete);
+
+app.get('/projects', users.ensureAuthenticated, users.projects);
+app.post('/projects', users.ensureAuthenticated, [
+  check('project', 'Github URL must be entered correctly').matches(/^https:\/\/github.com/),
+  check('comment', 'Comment cannot be blank').isLength({ min: 1 })
+], users.projectsPost);
 
 app.get('/delete/:projectUrl', users.ensureAuthenticated, users.deleteProject);
 

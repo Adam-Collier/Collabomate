@@ -1028,7 +1028,7 @@ input {
 .profile {
   padding: 20px 50px;
   width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
   border-left: 1px solid lightgray; }
 
 .container > h1 {

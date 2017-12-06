@@ -501,8 +501,7 @@ input {
 
 .login label {
   display: block;
-  margin-bottom: 5px;
-  padding-left: 5px; }
+  margin-bottom: 5px; }
 
 .login input[type=email], .login input[type=password] {
   margin-bottom: 10px;
@@ -565,6 +564,9 @@ input {
   border: 1px solid #d1d1d1;
   margin: 0 0 20px 0;
   width: calc(100% - 22px); }
+
+#name {
+  text-transform: capitalize; }
 
 .signup .github {
   margin-bottom: 8px;
@@ -971,7 +973,7 @@ input {
   margin-bottom: 0px; }
 
 .project .level {
-  padding-top: 19px; }
+  padding-top: 16px; }
 
 .project > div:nth-of-type(2) {
   flex-direction: column; }
@@ -987,14 +989,15 @@ input {
   margin-bottom: 6px;
   margin-left: -4px;
   line-height: 1.5;
-  font-size: 0.8em; }
+  font-size: 0.8em;
+  word-wrap: break-word; }
 
 .project > div:nth-of-type(3) {
-  background: #e9fafa; }
+  background: #e9fafa;
+  cursor: pointer; }
 
 .project > div:nth-of-type(3) div {
-  display: flex;
-  cursor: pointer; }
+  display: flex; }
 
 .readme ~ svg {
   width: 8px;

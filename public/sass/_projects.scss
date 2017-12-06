@@ -54,7 +54,7 @@
 }
 
 .project .level{
-  padding-top: 19px;
+  padding-top: 16px;
 }
 
 .project > div:nth-of-type(2){
@@ -79,11 +79,11 @@
 
 .project > div:nth-of-type(3){
   background: #e9fafa;
+  cursor: pointer;
 }
 
 .project > div:nth-of-type(3) div{
   display: flex;
-  cursor: pointer;
 }
 
 .readme ~ svg{

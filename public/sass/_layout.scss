@@ -2,6 +2,7 @@
   max-width: 700px;
   margin: 0 auto;
 }
+
 .header{
   display: flex;
   justify-content: space-between;
@@ -12,31 +13,38 @@
   margin-bottom: 30px;
   user-select: none;
 }
+
 .header ul{
   list-style-type: none;
   padding: 5px 0 0 0;
 }
+
 .header li{
   display: inline;
   padding-left: 15px;
   position: relative;
   cursor: pointer;
 }
+
 .header label[for=login]{
   cursor: pointer;
 }
+
 .header a{
   color: #000000;
   text-decoration: none;
 }
+
 .header input[type=checkbox]{
   position: absolute;
   opacity: 0;
 }
+
 .header input[type=checkbox]:checked ~ div {
    visibility: visible;
    opacity: 1;
 }
+
 .login{
   position: absolute;
   width: 300px;
@@ -51,6 +59,7 @@
   opacity: 0;
   transition: all 100ms ease-in-out;
 }
+
 .login::before {
     background-color: #FFFFFF;
     content: "\00a0";
@@ -65,6 +74,7 @@
     border-radius: 0px 0px 0px 5px;
     box-shadow: -2px 2px 2px 0 rgba(0,0,0,0.03);
 }
+
 .github{
   display: flex;
   justify-content: flex-end;
@@ -77,11 +87,12 @@
   width: 22px; 
   } 
 }
+
 .login label{
   display: block;
   margin-bottom: 5px;
-  padding-left: 5px;
 }
+
 .login input[type=email], .login input[type=password]{
   margin-bottom: 10px;
   width: calc(100% - 12px);
@@ -90,12 +101,15 @@
   border-radius: 2px;
   border: 1px solid rgb(209, 209, 209);
 }
+
 #password{
   margin-bottom: 20px;
 }
+
 .submit{
   text-align: right;
 }
+
 .login p{
   font-size: 12px;
   margin-bottom: 0px;
@@ -104,6 +118,7 @@
     text-decoration: underline;
   }
 }
+
 .text-danger{
   background: #ffcdd2;
   padding: 15px;
@@ -121,6 +136,7 @@
   align-items: center;
   height: calc(100vh - 200px);
 }
+
 .signup-form{
   padding-top: 10px;
   width: 372px;
@@ -133,13 +149,16 @@
     margin: 0;
   }
 }
+
 .signup form{
   width: 100%;
 }
+
 .signup label{
   display: flex;
   margin-bottom: 10px;
 }
+
 .signup input{
   display: block;
   padding: 10px 10px;
@@ -149,6 +168,11 @@
   margin: 0 0 20px 0;
   width: calc(100% - 22px);
 }
+
+#name{
+  text-transform: capitalize;
+}
+
 .signup .github{
   margin-bottom: 8px;
   justify-content: flex-start;

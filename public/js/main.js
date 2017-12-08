@@ -1,6 +1,6 @@
-var app = (function(){
+var app = (function () {
   return {
-    fetchAPI: function(){
+    fetchAPI: function () {
       fetch('/api').then(function (response) {
         return response.json()
       }).then(function (projects) {
@@ -42,22 +42,27 @@ var app = (function(){
           document.querySelector('.projects').insertAdjacentHTML('beforeend', projectCard);
         })
       }).then(function () {
-        document.querySelectorAll('.readme').forEach(function (x) {
+        document.querySelectorAll('.project > div:nth-of-type(3)').forEach(function (x) {
           x.addEventListener('click', function () {
+            console.log(this);
             var readme = this.parentElement.parentElement;
-            // readme.nextElementSibling.classList.toggle('accordian')
-            this.nextElementSibling.classList.toggle('arrow')
+            this.querySelector('svg').classList.toggle('arrow')
 
-            if (readme.nextElementSibling.style.maxHeight) {
-              readme.nextElementSibling.style.maxHeight = null;
+            if (this.nextElementSibling.style.maxHeight) {
+              this.nextElementSibling.style.maxHeight = null;
             } else {
-              readme.nextElementSibling.style.maxHeight = readme.nextElementSibling.scrollHeight + "px";
+              this.nextElementSibling.style.maxHeight = this.nextElementSibling.scrollHeight + "px";
             }
           })
         })
       }).catch(function (err) {
         document.querySelector('.projects').innerHTML = "api not responding";
       })
+    },
+    inputFocus: function (login) {
+      setTimeout(() => {
+        login.parentElement.querySelector('input#email').focus();
+      }, 100);
     }
   }
 })();

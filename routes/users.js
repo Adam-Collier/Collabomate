@@ -97,23 +97,6 @@ exports.profile = function (req, res){
   })
 }
 
-// POST profile
-exports.profilePost = function(req, res){
-  console.log(req.body);
-  req.user.projects.push({
-    project: req.body.project,
-    difficulty: req.body.difficulty,
-    comment: req.body.comment
-  })
-  req.user.save(function (err) {
-    if (err) return console.log(err);
-    else {
-      console.log("success!!!");
-      res.redirect('back');
-    }
-  });
-}
-
 // PUT /profile
 // update profile information or password
 exports.profilePut = function (req, res, next) {
@@ -139,5 +122,66 @@ exports.profilePut = function (req, res, next) {
     });
   });
 };
+
+/**
+ * DELETE /profile
+ */
+exports.profileDelete = function (req, res, next) {
+  User.remove({ _id: req.user.id }, function (err) {
+    req.logout();
+    req.flash('info', { msg: 'Your account has been permanently deleted.' });
+    res.redirect('/');
+  });
+};
+
+// GET /projects
+exports.projects = function (req, res) {
+  api.userProjects(req, res).then(function (data) {
+    res.locals.projects = data;
+    res.render('projects');
+  })
+}
+
+// POST projects
+exports.projectsPost = function(req, res){
+
+  var errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    req.flash('error', errors.array());
+    return res.redirect('/projects');
+  }
+
+  console.log(req.body);
+  req.user.projects.push({
+    project: req.body.project,
+    difficulty: req.body.difficulty,
+    comment: req.body.comment
+  })
+  req.user.save(function (err) {
+    if (err) return console.log(err);
+    else {
+      console.log("success!!!");
+      res.redirect('back');
+    }
+  });
+}
+
+// DELETE profile project
+exports.deleteProject = function(req, res){
+  User.findById(req.user.id, function (err, user) {
+    user.projects.forEach(function(obj, i){
+      if(obj.project == req.params.projectUrl){
+        user.projects[i].remove();
+      }
+    });
+    user.save(function (err) {
+      req.flash('success', { msg: 'Your project has been successfully deleted.' });
+      res.redirect('/projects');
+    })
+  })
+}
+
 
 

@@ -12,9 +12,7 @@ block content
           div= error.msg
     h1 Profile
     .profile
-      
       div
-        
         //- img.gravatar(src=user.gravatar, width='100', height='100')
         form(method='POST', action='/profile?_method=PUT')
           label(for='email') Email
@@ -31,7 +29,7 @@ block content
         
         h3 Change Password
 
-        form(method='POST' )
+        form(method='POST', action='/profile?_method=PUT')
           label(for='password') New Password
           input(type='password', name='password', id='password')
           label(for='confirm') Confirm Password
@@ -46,59 +44,6 @@ block content
           p: a(href='/auth/github') Link your Github account
 
         h3 Delete Account
-        form(method='POST', action='/account?_method=DELETE')
+        form(method='POST', action='/profile?_method=DELETE')
           p You can delete your account, but keep in mind this action is irreversible.
           button#delete(type='submit') Delete my account
-
-    h1 Projects
-    form(method='POST').addProject
-      h3 Add a project
-      input(type='text', name='project', id='project', value=user.project)
-      br
-      input(type='radio', name='difficulty', value='Beginner')
-      p beginner
-      input(type='radio', name='difficulty', value='Intermediate')
-      p intermediate
-      input(type='radio', name='difficulty', value='Advanced')
-      p advanced
-      br
-      textarea(placeholder='Add a comment about what you want help with' name='comment')
-      button(type='submit') Update Projects    
-    .projects
-      for project in projects
-        //- p #{project.repo}
-        .project
-          div
-            div
-              h2.name #{project.repo}
-              p.username #{project.username}
-              a.repo(href="#{project.repoUrl}") Github repo
-            div
-              p.level #{project.difficulty}
-          div
-            h4 comment
-            p.comment #{project.comment}
-          div
-            div
-              p.readme README
-              svg(width="100%", height="100%", viewbox="0 0 5 6", version="1.1", xmlns="http://www.w3.org/2000/svg", xmlns:xlink="http://www.w3.org/1999/xlink", xml:space="preserve", style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;")
-                path(d="M4.154,2.505l-4.154,2.506l0,-5.011l4.154,2.505Z", style="fill:#000;")
-            p.languages #{project.languages}
-          .github-readme
-            | !{project.README}
-
-    script.
-      document.querySelectorAll('.readme').forEach(function(x){
-          x.addEventListener('click', function(){
-          var readme = this.parentElement.parentElement;
-          // readme.nextElementSibling.classList.toggle('accordian')
-          this.nextElementSibling.classList.toggle('arrow')
-
-          if (readme.nextElementSibling.style.maxHeight) {
-            readme.nextElementSibling.style.maxHeight = null;
-          } else {
-            readme.nextElementSibling.style.maxHeight = readme.nextElementSibling.scrollHeight + "px";
-          }
-        })
-      })
-      

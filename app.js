@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var url = require("url");
 // var favicon = require('serve-favicon');
 var logger = require('morgan');
 var dotenv = require('dotenv');
@@ -39,8 +40,8 @@ app.set('json spaces', 2);
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(methodOverride('_method'));
 
 
@@ -55,7 +56,7 @@ app.use(passport.session());
 app.use(function (req, res, next) {
   res.locals.user = req.user;
   res.locals.path = req.path;
-  // res.locals.userProjects = ;
+  res.locals.url = req.originalUrl;
   next();
 });
 
@@ -76,13 +77,24 @@ app.post('/signup', [
   sanitize('email').normalizeEmail()
 ], users.signupPost)
 
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email profile repo'] }));
+app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/login' }));
+
 app.get('/logout', users.logout);
 
 app.get('/api', api.api);
 
 app.get('/profile', users.ensureAuthenticated, users.profile);
-app.post('/profile', users.ensureAuthenticated, users.profilePost);
 app.put('/profile', users.ensureAuthenticated, users.profilePut);
+app.delete('/profile', users.ensureAuthenticated, users.profileDelete);
+
+app.get('/projects', users.ensureAuthenticated, users.projects);
+app.post('/projects', users.ensureAuthenticated, [
+  check('project', 'Github URL must be entered correctly').matches(/^https:\/\/github.com/),
+  check('comment', 'Comment cannot be blank').isLength({ min: 1 })
+], users.projectsPost);
+
+app.get('/delete/:projectUrl', users.ensureAuthenticated, users.deleteProject);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

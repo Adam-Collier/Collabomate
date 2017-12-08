@@ -177,6 +177,7 @@ exports.deleteProject = function(req, res){
       }
     });
     user.save(function (err) {
+      req.flash('success', { msg: 'Your project has been successfully deleted.' });
       res.redirect('/projects');
     })
   })

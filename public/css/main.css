@@ -444,7 +444,8 @@ input {
   display: inline;
   padding-left: 15px;
   position: relative;
-  cursor: pointer; }
+  cursor: pointer;
+  text-transform: capitalize; }
 
 .header label[for=login] {
   cursor: pointer; }
@@ -526,6 +527,14 @@ input {
 
 .text-danger {
   background: #ffcdd2;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 3px;
+  line-height: 1.4;
+  font-size: 14px; }
+
+.text-success {
+  background: #defbd0;
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 3px;
@@ -1028,7 +1037,7 @@ input {
 .profile {
   padding: 20px 50px;
   width: 600px;
-  margin: 0 auto 50px auto;
+  margin: 0 auto;
   border-left: 1px solid lightgray; }
 
 .container > h1 {

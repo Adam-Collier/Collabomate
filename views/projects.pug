@@ -2,6 +2,14 @@ extends layout
 
 block content
   .container
+    if messages.success
+      div.text-success
+        for success in messages.success
+          div= success.msg
+    if messages.error
+      div.text-danger
+        for error in messages.error
+          div= error.msg
     h1 Projects
     form(method='POST').addProject
       h3 Add a project

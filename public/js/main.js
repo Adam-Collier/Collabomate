@@ -67,5 +67,7 @@ var app = (function () {
       login.parentElement.querySelector('input#email').focus();
     }, 100);
   }
+
+  return{fetchAPI, inputFocus};
 })();
 

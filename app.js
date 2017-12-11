@@ -96,6 +96,8 @@ app.post('/projects', users.ensureAuthenticated, [
 
 app.get('/delete/:projectUrl', users.ensureAuthenticated, users.deleteProject);
 
+app.post('/checkRepoExists', users.ensureAuthenticated, api.checkRepoExists);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

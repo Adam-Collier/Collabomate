@@ -519,8 +519,7 @@ input:not([type='radio']):focus, textarea:focus {
   width: calc(100% - 12px);
   padding: 5px;
   font-size: 14px;
-  border-radius: 2px;
-  border: 1px solid #d1d1d1; }
+  border-radius: 2px; }
 
 #password {
   margin-bottom: 20px; }

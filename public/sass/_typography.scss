@@ -57,6 +57,18 @@ button{
 
 input{
   display: block;
+  outline: none;
+}
+
+input:not([type='radio']), textarea{
+  outline: none;
+  display: block;
+  border: 1px solid rgb(209, 209, 209);
+}
+
+input:not([type='radio']):focus, textarea:focus{
+  border: 1px solid rgba(185, 226, 236, 0.8);
+  box-shadow: 0 0 5px 1px rgba(185, 226, 236, 0.8);
 }
 
 ::placeholder{

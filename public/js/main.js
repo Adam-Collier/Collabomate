@@ -39,9 +39,7 @@ var app = (function () {
             </div>
           </div>
         `
-          let project = document.querySelector('.projects');
-          project.innerHTML = '';
-          project.insertAdjacentHTML('beforeend', projectCard);
+          document.querySelector('.projects').insertAdjacentHTML('beforeend', projectCard);
         })
       })
       .then(() => {
@@ -69,26 +67,13 @@ var app = (function () {
   }
 
   var checkRepoExists = (input) => {
-    console.log("checking if repo exists");
-    console.log(input.value);
-    // if (input.value.match(/^https:\/\/github.com/)){
-    //   fetch('https://api.github.com/repos/' + input.value + '/languages?access_token=' + process.env.GITHUB_API).then((res) => {
-    //     console.log(res.json);
-    //   })
-    //   .catch((err) => console.log(err))
-    // } else{
-    //   console.log("doesn't match the URL");
-    // }
-
     if (input.value.match(/^https:\/\/github.com/)) {
       let xhr = new XMLHttpRequest();
-
       xhr.open('POST', '/checkRepoExists');
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onload = function () {
         if (xhr.status === 200) {
           console.log('successful post request');
-          console.log(xhr.responseText)
           if (xhr.responseText == "Repo Not Found"){
             input.style.borderColor = "red";
           }else{
@@ -101,9 +86,6 @@ var app = (function () {
       };
       xhr.send("url=" + input.value);
     }
-
-
-    
   }
 
   return { fetchAPI, inputFocus, checkRepoExists };

@@ -412,7 +412,17 @@ button {
   cursor: pointer; }
 
 input {
-  display: block; }
+  display: block;
+  outline: none; }
+
+input:not([type='radio']), textarea {
+  outline: none;
+  display: block;
+  border: 1px solid #d1d1d1; }
+
+input:not([type='radio']):focus, textarea:focus {
+  border: 1px solid rgba(185, 226, 236, 0.8);
+  box-shadow: 0 0 5px 1px rgba(185, 226, 236, 0.8); }
 
 ::placeholder {
   color: #a0a0a0; }
@@ -1058,7 +1068,6 @@ input {
   padding: 10px 10px;
   font-size: 18px;
   border-radius: 2px;
-  border: 1px solid #d1d1d1;
   margin: 0 0 12px 0;
   width: calc(100% - 22px); }
 
@@ -1078,7 +1087,6 @@ input {
   padding: 10px 10px;
   font-size: 18px;
   border-radius: 2px;
-  border: 1px solid #d1d1d1;
   margin: 0px;
   width: calc(100% - 22px);
   transition: all 100ms ease-in-out; }
@@ -1093,7 +1101,6 @@ input {
   padding: 10px 10px;
   font-size: 14px;
   border-radius: 2px;
-  border: 1px solid #d1d1d1;
   min-height: 80px;
   margin-bottom: 30px;
   resize: none; }

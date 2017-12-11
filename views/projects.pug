@@ -13,7 +13,7 @@ block content
     h1 Projects
     form(method='POST').addProject
       h3 Add a project
-      input(type='text', name='project', id='project', value=user.project, placeholder='https://github.com/username/repo')
+      input(type='text', name='project', id='project', value=user.project, placeholder='https://github.com/username/repo', onchange="app.checkRepoExists(this)")
       br
       input(type='radio', name='difficulty', value='Beginner', checked)
       p beginner
@@ -49,6 +49,7 @@ block content
           .github-readme
             | !{project.README}
 
+    script(src='/js/main.js')
     script.
       document.querySelectorAll('.project > div:nth-of-type(3)').forEach(function (x) {
         x.addEventListener('click', function () {

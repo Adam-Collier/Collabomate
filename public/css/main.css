@@ -1080,7 +1080,8 @@ input {
   border-radius: 2px;
   border: 1px solid #d1d1d1;
   margin: 0px;
-  width: calc(100% - 22px); }
+  width: calc(100% - 22px);
+  transition: all 100ms ease-in-out; }
 
 .addProject input[type=radio], .addProject p {
   display: inline-block;

@@ -85,5 +85,21 @@ exports.api = function (req, res) {
   })
 }
 
+exports.checkRepoExists = function(req, res) {
+  console.log(req.body);
+  
+  fetch('https://api.github.com/repos/' + req.body.url.split("/").slice(-2).join("/") + '/languages?access_token=' + process.env.GITHUB_API)
+    .then(function (response) {
+      return response.json();
+    }).then((json) => {
+      console.log(json);
+      if (json.message == "Not Found"){
+        res.send("Repo Not Found")
+      }else{
+        res.send("Repo Exists");
+      }
+    })
+}
+
 
 

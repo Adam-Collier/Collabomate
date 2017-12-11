@@ -24,6 +24,7 @@ function getAllDataForProj(proj) {
       comment: proj.comment
     }
   ])
+    .catch((err) => console.log(err))
 }
 
 exports.userProjects = function (request, response) {
@@ -32,19 +33,24 @@ exports.userProjects = function (request, response) {
     return getAllDataForProj(proj).catch(err => res.send("api failure"))
   }))
     .then((resp) => {
-      const data = resp.map((projectData) => ({
-        repo: projectData[1].name,
-        username: projectData[1].owner.login,
-        repoUrl: projectData[1].html_url,
-        languages: Object.keys(projectData[2]).reduce((str, lang) => str + ' ' + lang, ''),
-        difficulty: projectData[3].difficulty,
-        comment: projectData[3].comment,
-        README: projectData[0]
-      }));
+      const data = resp.reduce((acc, curr) => {
+        if (curr[1].message != "Not Found") {
+          acc.push({
+            repo: curr[1].name,
+            username: curr[1].owner.login,
+            repoUrl: curr[1].html_url,
+            languages: Object.keys(curr[2]).reduce((str, lang) => str + ' ' + lang, ''),
+            difficulty: curr[3].difficulty,
+            comment: curr[3].comment,
+            README: curr[0]
+          })
+        }
+        return acc;
+      }, [])
       return data;
-    });
+    })
+    .catch((err) => console.log("there is an error"))
 }
-
 
 
 exports.api = function (req, res) {
@@ -53,24 +59,29 @@ exports.api = function (req, res) {
     if (err) {
       res.send(err);
     }
-    // const allProjs = users.map((x) => console.log(x.projects));
     const allProjs = users.reduce((acc, curr) => acc.concat(curr.projects), []);
-    Promise.all(allProjs.map((obj) => {
+    return Promise.all(allProjs.map((obj) => {
       var proj = obj;
-      return getAllDataForProj(proj).catch(err => res.send("api failure"));
+      return getAllDataForProj(proj).catch((err) => console.log(err));
     }))
       .then((resp) => {
-        const data = resp.map((projectData) => ({
-          repo: projectData[1].name,
-          username: projectData[1].owner.login,
-          repoUrl: projectData[1].html_url,
-          languages: Object.keys(projectData[2]).reduce((str, lang) => str + ' ' + lang, ''),
-          difficulty: projectData[3].difficulty,
-          comment: projectData[3].comment,
-          README: projectData[0]
-        }));
+        const data = resp.reduce((acc, curr) => {
+          if (curr[1].message != "Not Found") {
+            acc.push({
+              repo: curr[1].name,
+              username: curr[1].owner.login,
+              repoUrl: curr[1].html_url,
+              languages: Object.keys(curr[2]).reduce((str, lang) => str + ' ' + lang, ''),
+              difficulty: curr[3].difficulty,
+              comment: curr[3].comment,
+              README: curr[0]
+            })
+          }
+          return acc;
+        }, [])
         res.send(data);
-      });
+      })
+      .catch((err) => console.error(err));
   })
 }
 

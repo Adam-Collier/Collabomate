@@ -389,8 +389,7 @@ h5 {
 
 p {
   font-size: 1em;
-  font-weight: 400;
-  margin-bottom: 30px; }
+  font-weight: 400; }
 
 a {
   color: #58C4D2;
@@ -413,7 +412,8 @@ button {
 
 input {
   display: block;
-  outline: none; }
+  outline: none;
+  background: #FFFFFF; }
 
 input:not([type='radio']), textarea {
   outline: none;
@@ -422,7 +422,8 @@ input:not([type='radio']), textarea {
 
 input:not([type='radio']):focus, textarea:focus {
   border: 1px solid rgba(185, 226, 236, 0.8);
-  box-shadow: 0 0 5px 1px rgba(185, 226, 236, 0.8); }
+  box-shadow: 0 0 5px 1px rgba(185, 226, 236, 0.8);
+  background: none; }
 
 ::placeholder {
   color: #a0a0a0; }
@@ -1086,23 +1087,33 @@ input:not([type='radio']):focus, textarea:focus {
   padding: 10px 10px;
   font-size: 18px;
   border-radius: 2px;
-  margin: 0px;
+  margin: 0px 0px 10px 0px;
   width: calc(100% - 22px);
   transition: all 100ms ease-in-out; }
 
-.addProject input[type=radio], .addProject p {
+.addProject input[type=radio], .addProject label {
   display: inline-block;
-  margin-right: 10px; }
+  margin-right: 10px;
+  margin-bottom: 30px; }
 
 .addProject textarea {
   width: calc(100% - 22px);
   padding: 0px;
   padding: 10px 10px;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 2px;
   min-height: 80px;
   margin-bottom: 30px;
   resize: none; }
+
+.repo {
+  margin: 0px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  display: block; }
+
+.repo.error {
+  color: red; }
 
 .text-success {
   color: #29b35b; }

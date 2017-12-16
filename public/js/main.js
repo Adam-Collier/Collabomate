@@ -1,5 +1,15 @@
 var app = (function () {
 
+  const debounce = (func, delay) => {
+    let inDebounce
+    return function () {
+      const context = this
+      const args = arguments
+      clearTimeout(inDebounce)
+      inDebounce = setTimeout(() => func.apply(context, args), delay)
+    }
+  }
+
   var fetchAPI = () => {
     fetch('/api').then(
       (response) => response.json()
@@ -66,28 +76,30 @@ var app = (function () {
     }, 100);
   }
 
-  var checkRepoExists = (input) => {
-    if (input.value.match(/^https:\/\/github.com/)) {
-      let xhr = new XMLHttpRequest();
-      xhr.open('POST', '/checkRepoExists');
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          console.log('successful post request');
-          if (xhr.responseText == "Repo Not Found"){
-            input.style.borderColor = "red";
-          }else{
-            input.style.borderColor = "green";
+  var checkRepoExists = debounce(function (input) {
+      console.log(input.value.match(/\//g).length);
+      if (input.value.length < 18 || input.value.match(/\//g).length < 2) {
+        input.style.borderColor = "red";
+      } else if (input.value.match(/(^https:\/\/github.com|^http:\/\/github.com)/)) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/checkRepoExists');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            console.log('successful post request');
+            if (xhr.responseText == "Repo Not Found") {
+              input.style.borderColor = "red";
+            } else {
+              input.style.borderColor = "green";
+            }
+          }
+          else if (xhr.status !== 200) {
+            console.log('Request failed.  Returned status of ' + xhr.status);
           }
         }
-        else if (xhr.status !== 200) {
-          console.log('Request failed.  Returned status of ' + xhr.status);
-        }
-      };
-      xhr.send("url=" + input.value);
-    }
-  }
-
-  return { fetchAPI, inputFocus, checkRepoExists };
+        xhr.send("url=" + input.value);
+      }
+      console.log("blah");
+    }, 250)
+  return { fetchAPI, inputFocus, checkRepoExists};
 })();
-

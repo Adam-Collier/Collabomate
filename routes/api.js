@@ -85,18 +85,19 @@ exports.api = function (req, res) {
   })
 }
 
-exports.checkRepoExists = function(req, res) {
-  console.log(req.body);
-  
-  fetch('https://api.github.com/repos/' + req.body.url.split("/").slice(-2).join("/") + '/languages?access_token=' + process.env.GITHUB_API)
+exports.checkRepoExists = function (req, res) {
+  if (req.body){
+    req = req.body.url
+  }
+  return fetch('https://api.github.com/repos/' + req.split("/").slice(-2).join("/") + '/languages?access_token=' + process.env.GITHUB_API)
     .then(function (response) {
       return response.json();
     }).then((json) => {
       console.log(json);
-      if (json.message == "Not Found"){
-        res.send("Repo Not Found")
-      }else{
-        res.send("Repo Exists");
+      if (json.message == "Not Found") {
+        return res == undefined ? "Repo Not Found" : res.send("Repo Not Found")
+      } else {
+        return res == undefined ? "Repo Exists" : res.send("Repo Exists")
       }
     })
 }

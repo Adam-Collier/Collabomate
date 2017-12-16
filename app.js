@@ -71,7 +71,7 @@ app.post('/', [
 app.get('/signup', users.signupGet)
 app.post('/signup', [
   check('name', 'Name cannot be blank').isLength({ min: 1 }),
-  check('email', 'Email is not valid').isEmail(),           
+  check('email', 'Email is not valid').isEmail(),
   check('email', 'Email cannot be blank').isLength({ min: 1 }),
   check('password', 'Password must be at least 4 characters long').isLength(4),
   sanitize('email').normalizeEmail()
@@ -90,7 +90,14 @@ app.delete('/profile', users.ensureAuthenticated, users.profileDelete);
 
 app.get('/projects', users.ensureAuthenticated, users.projects);
 app.post('/projects', users.ensureAuthenticated, [
-  check('project', 'Github URL must be entered correctly').matches(/^https:\/\/github.com/),
+  check('project', 'Github URL must be entered correctly')
+    .custom(value => {
+      return api.checkRepoExists(value)
+        .then(blah => {
+          console.log(blah + " this is in the validator");
+          return blah == "Repo Exists" ? true : false
+        })
+    }),
   check('comment', 'Comment cannot be blank').isLength({ min: 1 })
 ], users.projectsPost);
 
@@ -99,14 +106,14 @@ app.get('/delete/:projectUrl', users.ensureAuthenticated, users.deleteProject);
 app.post('/checkRepoExists', users.ensureAuthenticated, api.checkRepoExists);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

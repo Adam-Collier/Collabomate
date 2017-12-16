@@ -13,14 +13,14 @@ block content
     h1 Projects
     form(method='POST').addProject
       h3 Add a project
-      input(type='text', name='project', id='project', value=user.project, placeholder='https://github.com/username/repo', onchange="app.checkRepoExists(this)")
+      input(type='text', name='project', id='project', value=user.project, placeholder='https://github.com/username/repo', onkeyup="app.checkRepoExists(this)", autocomplete="off")
       br
       input(type='radio', name='difficulty', value='Beginner', checked)
-      p beginner
+      label beginner
       input(type='radio', name='difficulty', value='Intermediate')
-      p intermediate
+      label intermediate
       input(type='radio', name='difficulty', value='Advanced')
-      p advanced
+      label advanced
       br
       textarea(placeholder='Add a comment about what you want help with' name='comment')
       button(type='submit') Update Projects 

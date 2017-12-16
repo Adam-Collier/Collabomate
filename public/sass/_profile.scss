@@ -41,21 +41,32 @@
   padding: 10px 10px;
   font-size: 18px;
   border-radius: 2px;
-  margin: 0px;
+  margin: 0px 0px 10px 0px;
   width: calc(100% - 22px);
   transition: all 100ms ease-in-out;
 }
-.addProject input[type=radio], .addProject p{
+.addProject input[type=radio], .addProject label{
   display: inline-block;
   margin-right: 10px;
+  margin-bottom: 30px;
 }
 .addProject textarea{
   width: calc(100% - 22px);
   padding: 0px;
   padding: 10px 10px;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 2px;
   min-height: 80px;
   margin-bottom: 30px;
   resize: none;
+}
+.repo{
+  margin: 0px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  display: block;
+}
+
+.repo.error{
+  color: red;
 }

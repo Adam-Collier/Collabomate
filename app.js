@@ -101,7 +101,7 @@ app.post('/projects', users.ensureAuthenticated, [
   check('comment', 'Comment cannot be blank').isLength({ min: 1 })
 ], users.projectsPost);
 
-app.get('/delete/:projectUrl', users.ensureAuthenticated, users.deleteProject);
+app.get('/delete/:projectId', users.ensureAuthenticated, users.deleteProject);
 
 app.post('/checkRepoExists', users.ensureAuthenticated, api.checkRepoExists);
 

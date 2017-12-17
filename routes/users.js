@@ -172,7 +172,8 @@ exports.projectsPost = function(req, res){
 exports.deleteProject = function(req, res){
   User.findById(req.user.id, function (err, user) {
     user.projects.forEach(function(obj, i){
-      if(obj.project == req.params.projectUrl){
+      console.log(obj);
+      if(obj._id == req.params.projectId){
         user.projects[i].remove();
       }
     });

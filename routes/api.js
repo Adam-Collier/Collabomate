@@ -21,7 +21,8 @@ function getAllDataForProj(proj) {
       }),
     {
       difficulty: proj.difficulty,
-      comment: proj.comment
+      comment: proj.comment,
+      id: proj._id
     }
   ])
     .catch((err) => console.log(err))
@@ -36,6 +37,7 @@ exports.userProjects = function (request, response) {
       const data = resp.reduce((acc, curr) => {
         if (curr[1].message != "Not Found") {
           acc.push({
+            id: curr[3].id,
             repo: curr[1].name,
             username: curr[1].owner.login,
             repoUrl: curr[1].html_url,

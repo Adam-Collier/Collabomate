@@ -55,7 +55,6 @@ var app = (function () {
       .then(() => {
         document.querySelectorAll('.project > div:nth-of-type(3)').forEach(function (x) {
           x.addEventListener('click', function () {
-            console.log(this);
             var readme = this.parentElement.parentElement;
             this.querySelector('svg').classList.toggle('arrow')
 
@@ -76,9 +75,11 @@ var app = (function () {
     }, 100);
   }
 
-  var checkRepoExists = debounce(function (input) {
-      console.log(input.value.match(/\//g).length);
-      if (input.value.length < 18 || input.value.match(/\//g).length < 2) {
+  var checkRepoExists =
+    debounce(function (input) {
+      if (input.value.length < 18 ||
+        input.value == null ||
+        input.value.match(/\//g).length < 2) {
         input.style.borderColor = "red";
       } else if (input.value.match(/(^https:\/\/github.com|^http:\/\/github.com)/)) {
         let xhr = new XMLHttpRequest();
@@ -86,7 +87,6 @@ var app = (function () {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function () {
           if (xhr.status === 200) {
-            console.log('successful post request');
             if (xhr.responseText == "Repo Not Found") {
               input.style.borderColor = "red";
             } else {
@@ -99,7 +99,6 @@ var app = (function () {
         }
         xhr.send("url=" + input.value);
       }
-      console.log("blah");
     }, 250)
-  return { fetchAPI, inputFocus, checkRepoExists};
+  return { fetchAPI, inputFocus, checkRepoExists };
 })();

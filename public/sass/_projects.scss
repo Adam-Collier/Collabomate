@@ -1,3 +1,14 @@
+@keyframes reveal{
+  0%{
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
 .projects{
   margin-bottom: 80px;
 }
@@ -14,6 +25,14 @@
   margin: 0 auto;
   margin-bottom: 50px;
   width: 700px;
+  opacity: 0;
+  animation: reveal 400ms ease-in-out forwards;
+}
+
+@for $i from 1 to 5 {
+  .projects > div:nth-child(#{$i}) {
+    animation-delay: $i * 0.1s; 
+  }
 }
 
 .project *{

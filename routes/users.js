@@ -124,6 +124,19 @@ exports.profilePut = function (req, res, next) {
 };
 
 /**
+ * GET /unlink/:provider
+ */
+exports.unlink = function(req, res, next) {
+  User.findById(req.user.id, function(err, user) {
+    user.github = undefined;
+    user.save(function(err) {
+      req.flash('success', { msg: 'Your account has been unlinked.' });
+      res.redirect('/profile');
+    });
+  });
+};
+
+/**
  * DELETE /profile
  */
 exports.profileDelete = function (req, res, next) {

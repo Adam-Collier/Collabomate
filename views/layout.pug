@@ -9,23 +9,13 @@ html
     //- Google analytics
     script(async, src='https://www.googletagmanager.com/gtag/js?id=UA-48754102-5')
     script.
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      gtag('config', 'UA-48754102-5');
-
-      // Feature detects Navigation Timing API support.
-      if (window.performance) {
-        // Gets the number of milliseconds since page load
-        // (and rounds the result since the value must be an integer).
-        var timeSincePageLoad = Math.round(performance.now());
-        // Sends the timing event to Google Analytics.
-        gtag('event', 'timing_complete', {
-          'name': 'load',
-          'value': timeSincePageLoad
-        });
-      }
+      ga('create', 'UA-48754102-5', 'auto', {'siteSpeedSampleRate': 100});
+      ga('send', 'pageview');
 
   body
     include partials/header

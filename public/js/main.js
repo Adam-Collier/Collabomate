@@ -42,15 +42,32 @@ var app = (function () {
       }
     }, 250);
 
-    var showReadme = (readmeClick) => {
-      readmeClick.querySelector('svg').classList.toggle('arrow');
-      let readmeDiv = readmeClick.nextElementSibling;
-      if (readmeDiv.style.maxHeight) {
-        readmeDiv.style.maxHeight = null;
-      } else {
-        readmeDiv.style.maxHeight = readmeDiv.scrollHeight + "px";
-      }
+  var showReadme = (readmeClick) => {
+    readmeClick.querySelector('svg').classList.toggle('arrow');
+    let readmeDiv = readmeClick.nextElementSibling;
+    if (readmeDiv.style.maxHeight) {
+      readmeDiv.style.maxHeight = null;
+    } else {
+      readmeDiv.style.maxHeight = readmeDiv.scrollHeight + "px";
     }
+  }
 
-  return { inputFocus, checkRepoExists, showReadme };
+  var fetchReadme = (acc) => {
+    if (acc.nextElementSibling.innerHTML == '') {
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', '/fetchReadme');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          acc.nextElementSibling.innerHTML = xhr.responseText;
+        }
+        else if (xhr.status !== 200) {
+          console.log('Request failed.  Returned status of ' + xhr.status);
+        }
+      }
+      xhr.send("url=" + acc.dataset.url);
+    }
+  }
+
+  return { inputFocus, checkRepoExists, showReadme, fetchReadme };
 })();

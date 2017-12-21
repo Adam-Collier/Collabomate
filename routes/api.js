@@ -57,15 +57,17 @@ exports.userProjects = function (request, response) {
 
 exports.api = function (req, res) {
   // find all of the projects from all users
-  User.find({}, { _id: 0, projects: 1 }, function (err, users) {
+  return User.find({}, { _id: 0, projects: 1 }, function (err, users) {
     if (err) {
       res.send(err);
     }
-    const allProjs = users.reduce((acc, curr) => acc.concat(curr.projects), []);
+    return users;
+  }).then((users) =>{
+    var allProjs = users.reduce((acc, curr) => acc.concat(curr.projects), []);
     return Promise.all(allProjs.map((obj) => {
-      var proj = obj;
-      return getAllDataForProj(proj).catch((err) => console.log(err));
+      return getAllDataForProj(obj).catch((err) => console.log(err));
     }))
+      // .catch((err) => console.error(err))
       .then((resp) => {
         const data = resp.reduce((acc, curr) => {
           if (curr[1].message != "Not Found") {
@@ -81,10 +83,11 @@ exports.api = function (req, res) {
           }
           return acc;
         }, [])
-        res.send(data);
+        return data;
       })
       .catch((err) => console.error(err));
   })
+    .catch((err) => console.error(err));
 }
 
 exports.checkRepoExists = function (req, res) {
@@ -95,7 +98,6 @@ exports.checkRepoExists = function (req, res) {
     .then(function (response) {
       return response.json();
     }).then((json) => {
-      console.log(json);
       if (json.message == "Not Found") {
         return res == undefined ? "Repo Not Found" : res.send("Repo Not Found")
       } else {

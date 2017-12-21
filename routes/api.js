@@ -3,14 +3,6 @@ var fetch = require('node-fetch');
 
 function getAllDataForProj(proj) {
   return Promise.all([
-    fetch('https://api.github.com/repos/' + proj.project.split("/").slice(-2).join("/") + '/readme?access_token=' + process.env.GITHUB_API, {
-      headers: {
-        'Accept': 'application/vnd.github.v3.html'
-      }
-    })
-      .then(function (response) {
-        return response.text();
-      }),
     fetch('https://api.github.com/repos/' + proj.project.split("/").slice(-2).join("/") + '?access_token=' + process.env.GITHUB_API)
       .then(function (response) {
         return response.json();
@@ -37,14 +29,13 @@ exports.userProjects = function (request, response) {
       const data = resp.reduce((acc, curr) => {
         if (curr[1].message != "Not Found") {
           acc.push({
-            id: curr[3].id,
-            repo: curr[1].name,
-            username: curr[1].owner.login,
-            repoUrl: curr[1].html_url,
-            languages: Object.keys(curr[2]).reduce((str, lang) => str + ' ' + lang, ''),
-            difficulty: curr[3].difficulty,
-            comment: curr[3].comment,
-            README: curr[0]
+            id: curr[2].id,
+            repo: curr[0].name,
+            username: curr[0].owner.login,
+            repoUrl: curr[0].html_url,
+            languages: Object.keys(curr[1]).reduce((str, lang) => str + ' ' + lang, ''),
+            difficulty: curr[2].difficulty,
+            comment: curr[2].comment
           })
         }
         return acc;
@@ -62,23 +53,21 @@ exports.api = function (req, res) {
       res.send(err);
     }
     return users;
-  }).then((users) =>{
+  }).then((users) => {
     var allProjs = users.reduce((acc, curr) => acc.concat(curr.projects), []);
     return Promise.all(allProjs.map((obj) => {
       return getAllDataForProj(obj).catch((err) => console.log(err));
     }))
-      // .catch((err) => console.error(err))
       .then((resp) => {
         const data = resp.reduce((acc, curr) => {
           if (curr[1].message != "Not Found") {
             acc.push({
-              repo: curr[1].name,
-              username: curr[1].owner.login,
-              repoUrl: curr[1].html_url,
-              languages: Object.keys(curr[2]).reduce((str, lang) => str + ' ' + lang, ''),
-              difficulty: curr[3].difficulty,
-              comment: curr[3].comment,
-              README: curr[0]
+              repo: curr[0].name,
+              username: curr[0].owner.login,
+              repoUrl: curr[0].html_url,
+              languages: Object.keys(curr[1]).reduce((str, lang) => str + ' ' + lang, ''),
+              difficulty: curr[2].difficulty,
+              comment: curr[2].comment,
             })
           }
           return acc;
@@ -91,7 +80,7 @@ exports.api = function (req, res) {
 }
 
 exports.checkRepoExists = function (req, res) {
-  if (req.body){
+  if (req.body) {
     req = req.body.url
   }
   return fetch('https://api.github.com/repos/' + req.split("/").slice(-2).join("/") + '/languages?access_token=' + process.env.GITHUB_API)
@@ -104,6 +93,18 @@ exports.checkRepoExists = function (req, res) {
         return res == undefined ? "Repo Exists" : res.send("Repo Exists")
       }
     })
+}
+
+exports.fetchReadme = (req, res) => {
+  fetch('https://api.github.com/repos/' + req.body.url.split("/").slice(-2).join("/") + '/readme?access_token=' + process.env.GITHUB_API, {
+    headers: {
+      'Accept': 'application/vnd.github.v3.html'
+    }
+  }).then((data) => {
+    return data.text();
+  }).then((response) => {
+    res.send(response);
+  })
 }
 
 

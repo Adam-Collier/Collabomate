@@ -92,7 +92,6 @@ exports.logout = function (req, res) {
 // GET /profile
 exports.profile = function (req, res){
   api.userProjects(req, res).then(function(data){
-    res.locals.projects = data;
     res.render('profile');
   })
 }

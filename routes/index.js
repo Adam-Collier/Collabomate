@@ -8,7 +8,6 @@ var api = require('./api');
  */
 exports.index = function (req, res) {
   api.api(req, res).then(function (data) {
-    console.log(data);
     res.locals.projects = data;
     res.render('home', {
       title: 'Home'

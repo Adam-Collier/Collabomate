@@ -4,7 +4,6 @@ var reload = browserSync.reload;
 var nodemon = require('gulp-nodemon');
 var sass = require('gulp-sass');
 
-
 gulp.task('browser-sync', ['nodemon'], function () {
   browserSync({
     proxy: "localhost:3000",  // local node app address
@@ -38,7 +37,7 @@ gulp.task('nodemon', function (cb) {
 
 gulp.task('sass', function () {
   gulp.src('./public/sass/main.scss')
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest('./public/css'));
 });
 

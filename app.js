@@ -4,6 +4,7 @@ var url = require("url");
 // var favicon = require('serve-favicon');
 var logger = require('morgan');
 var dotenv = require('dotenv');
+var compression = require('compression')
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
@@ -24,6 +25,7 @@ var api = require('./routes/api');
 require('./config/passport');
 
 var app = express();
+app.use(compression())
 
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function () {

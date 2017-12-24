@@ -7,13 +7,15 @@ var dotenv = require('dotenv');
 var compression = require('compression')
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
-var session = require('express-session');
+var session = require('cookie-session');
 var bodyParser = require('body-parser');
 var flash = require('express-flash');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var { check, validationResult } = require('express-validator/check');
 var { matchedData, sanitize } = require('express-validator/filter');
+
+console.log(process.env.NODE_ENV);
 
 // Load environment variables from .env file
 dotenv.load();

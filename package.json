@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "NODE_ENV=production node ./bin/www",
     "nodemon": "nodemon ./bin/www",
     "gulp": "gulp"
   },
@@ -13,6 +13,7 @@
     "browser-sync": "^2.18.13",
     "compression": "^1.7.1",
     "cookie-parser": "~1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
     "express": "~4.15.5",

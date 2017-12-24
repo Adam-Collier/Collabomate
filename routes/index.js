@@ -10,6 +10,7 @@ exports.index = function (req, res) {
   api.api(req, res).then(function (data) {
     res.locals.projects = data;
     res.render('home', {
+      cache: true,
       title: 'Home'
     });
   })

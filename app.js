@@ -15,8 +15,6 @@ var passport = require('passport');
 var { check, validationResult } = require('express-validator/check');
 var { matchedData, sanitize } = require('express-validator/filter');
 
-console.log(process.env.NODE_ENV);
-
 // Load environment variables from .env file
 dotenv.load();
 
@@ -92,6 +90,8 @@ app.get('/api', api.api);
 app.get('/profile', users.ensureAuthenticated, users.profile);
 app.put('/profile', users.ensureAuthenticated, users.profilePut);
 app.delete('/profile', users.ensureAuthenticated, users.profileDelete);
+
+app.get('/fork-repo/:projectUrl', users.forkProject);
 
 app.get('/projects', users.ensureAuthenticated, users.projects);
 app.post('/projects', users.ensureAuthenticated, [

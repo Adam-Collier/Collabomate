@@ -48,6 +48,9 @@ passport.use(new GithubStrategy({
           user.name = user.name || profile.displayName;
           user.picture = user.picture || profile._json.avatar_url;
           user.github = profile.id;
+          user.token = accessToken;
+          user.rtoken = refreshToken;
+          console.log(user);
           user.save(function (err) {
             req.flash('success', { msg: 'Your Github account has been linked.' });
             done(err, user);
@@ -70,7 +73,9 @@ passport.use(new GithubStrategy({
             email: profile._json.email,
             location: profile._json.location,
             picture: profile._json.avatar_url,
-            github: profile.id
+            github: profile.id,
+            token: accessToken,
+            rtoken: refreshToken
           });
           console.log(profile);
           console.log(newUser);

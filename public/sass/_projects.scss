@@ -100,6 +100,7 @@
 .project > div:nth-of-type(3){
   background: #e9fafa;
   cursor: pointer;
+  position: relative;
 }
 
 .project > div:nth-of-type(3) div{
@@ -112,8 +113,26 @@
   transition: all 300ms ease-in-out;
 }
 
+.arrow{
+  transform: rotate(90deg);
+  transform-origin: 67% center;
+}
+
+.project .languages{
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.project .fork{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-80%, -50%);
+  font-size: 0.8em;
+  color: #000000;
+}
+
 .md{
-  // background: rgb(250, 250, 250);
   position: relative;
   z-index: 0;
   padding: 24px;
@@ -126,14 +145,4 @@
   transition: all 300ms ease-in-out;
   max-height: 0px;
   overflow: hidden;
-}
-
-.arrow{
-  transform: rotate(90deg);
-  transform-origin: 67% center;
-}
-
-.project .languages{
-  font-size: 12px;
-  line-height: 1.5;
 }

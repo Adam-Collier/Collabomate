@@ -4,6 +4,8 @@ var { check, validationResult } = require('express-validator/check');
 var { matchedData, sanitize } = require('express-validator/filter');
 var api = require('./api');
 var request = require('request');
+const util = require('util');
+const setTimeoutPromise = util.promisify(setTimeout);
 
 /**
  * POST /login
@@ -165,7 +167,7 @@ exports.projectsPost = function (req, res) {
     req.flash('error', errors.array());
     return res.redirect('/projects');
   }
-
+  
   console.log(req.body);
   req.user.projects.push({
     project: req.body.project,
@@ -208,7 +210,9 @@ exports.forkProject = function (req, res) {
       url: 'https://api.github.com/repos/' + req.params.projectUrl.split("/").slice(-2).join("/") + '/forks' + '?access_token=' + req.user.token
     }, function (error, response, body) {
       console.log(body);
-      res.redirect('/profile')
+      setTimeoutPromise(3000).then((value) => {
+        res.redirect('https://github.com');
+      });
     });
   }else{
     console.log('github authenticated user not found');

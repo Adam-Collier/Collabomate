@@ -1,0 +1,29 @@
+.fork-in-progress{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  opacity: 0;
+  transition: all 500ms;
+  animation: show 100ms ease-in-out forwards;
+}
+
+.fork-in-progress h1, .fork-in-progress h4{
+  margin-top: 0px;
+}
+
+@keyframes show{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}

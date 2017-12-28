@@ -69,5 +69,19 @@ var app = (function () {
     }
   }
 
-  return { inputFocus, checkRepoExists, showReadme, fetchReadme };
+  var fork = (link) => {
+    console.log("madness");
+    document.querySelector('body').style.overflow = 'hidden';
+    var forkedRepo = link.parentElement.parentElement;
+    const forkContent = `
+      <div class="fork-in-progress">
+        <h1>forking ${forkedRepo.querySelector('.username').innerHTML}/${forkedRepo.querySelector('.name').innerHTML}</h1>
+        <h4>It shouldn't take too long </h4>
+        <img src="/img/forking.gif">
+      </div>
+    `
+    document.querySelector('.container').insertAdjacentHTML('beforeend', forkContent)
+  }
+  
+  return { inputFocus, checkRepoExists, showReadme, fetchReadme, fork };
 })();

@@ -15,8 +15,6 @@ var passport = require('passport');
 var { check, validationResult } = require('express-validator/check');
 var { matchedData, sanitize } = require('express-validator/filter');
 
-console.log(process.env.NODE_ENV);
-
 // Load environment variables from .env file
 dotenv.load();
 
@@ -27,7 +25,22 @@ var api = require('./routes/api');
 require('./config/passport');
 
 var app = express();
-app.use(compression())
+
+Promise.all([
+  app.use(compression()),
+  app.use(logger('dev')),
+  app.use(bodyParser.json({ limit: '50mb' })),
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })),
+  app.use(methodOverride('_method')),
+  app.use(cookieParser()),
+  app.use(express.static(path.join(__dirname, 'public'))),
+  app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true })),
+  app.use(flash()),
+  app.use(passport.initialize()),
+  app.use(passport.session())
+]).then(() => {
+  console.log("yay theyre all done");
+})
 
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function () {
@@ -40,21 +53,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('json spaces', 2);
 
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-app.use(methodOverride('_method'));
-
-
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
 
 // set variables useable in .pug files
 app.use(function (req, res, next) {
@@ -92,6 +92,9 @@ app.get('/api', api.api);
 app.get('/profile', users.ensureAuthenticated, users.profile);
 app.put('/profile', users.ensureAuthenticated, users.profilePut);
 app.delete('/profile', users.ensureAuthenticated, users.profileDelete);
+
+app.post('/fork-repo', users.checkAuth);
+app.get('/fork-repo/:forkUrl', users.forkProject);
 
 app.get('/projects', users.ensureAuthenticated, users.projects);
 app.post('/projects', users.ensureAuthenticated, [

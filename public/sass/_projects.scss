@@ -13,24 +13,27 @@
   margin-bottom: 80px;
 }
 
+.projects > div{
+  position: relative;
+  opacity: 0;
+  animation: reveal 400ms ease-in-out forwards;
+}
+
 .project{
+  background: #FFFFFF;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  display: flex;
+  display: inline-block;
   position: relative;
   z-index: 1;
-  flex-direction: column;
-  justify-content: space-between;
   padding: 14px 0px 0px 0px;
   border-radius: 5px;
   margin: 0 auto;
   margin-bottom: 50px;
   width: 700px;
-  opacity: 0;
-  animation: reveal 400ms ease-in-out forwards;
 }
 
 @for $i from 1 to 5 {
-  .projects > div:nth-child(#{$i}) {
+  .projects > div:nth-of-type(#{$i}) {
     animation-delay: $i * 0.1s; 
   }
 }
@@ -49,7 +52,7 @@
   cursor: pointer;
 }
 
-.project > div:not(:last-child){
+.project > div:not(:nth-child(n+4)){
   display: flex;
   justify-content: space-between;
   padding: 8px 24px;
@@ -100,6 +103,7 @@
 .project > div:nth-of-type(3){
   background: #e9fafa;
   cursor: pointer;
+  position: relative;
 }
 
 .project > div:nth-of-type(3) div{
@@ -112,8 +116,26 @@
   transition: all 300ms ease-in-out;
 }
 
+.arrow{
+  transform: rotate(90deg);
+  transform-origin: 67% center;
+}
+
+.project .languages{
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.project .fork{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-80%, -50%);
+  font-size: 0.8em;
+  color: #000000;
+}
+
 .md{
-  // background: rgb(250, 250, 250);
   position: relative;
   z-index: 0;
   padding: 24px;
@@ -128,12 +150,44 @@
   overflow: hidden;
 }
 
-.arrow{
-  transform: rotate(90deg);
-  transform-origin: 67% center;
+@keyframes github-link-show{
+  0%{
+    transform: translateY(50px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
 }
 
-.project .languages{
-  font-size: 12px;
-  line-height: 1.5;
+@keyframes github-link-hide{
+  0%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(50px);
+  }
+}
+
+.github-message{
+  width: 652px;
+  margin: 0 auto;
+  background: #ffcdd2;
+  color: #b61b17;
+  padding: 8px 24px 13px 24px;
+  position: absolute;
+  left: 0;
+  bottom: calc(100% - 5px);
+  z-index: 0;
+  border-radius: 5px;
+  animation: github-link-show 250ms ease-in-out forwards, github-link-hide 300ms 4s ease-in-out forwards;
+}
+
+.github-message p{
+  font-size: 0.8em;
+  margin: 0px;
+}
+
+.github-message a{
+  color: #b61b17;
+  cursor: pointer;
 }

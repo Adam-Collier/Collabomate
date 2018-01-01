@@ -39,6 +39,7 @@ passport.use(new GithubStrategy({
   callbackURL: '/auth/github/callback',
   passReqToCallback: true
 }, function (req, accessToken, refreshToken, profile, done) {
+  console.log(profile);
   if (req.user) {
     User.findOne({ github: profile.id }, function (err, user) {
       if (user) {
@@ -48,6 +49,8 @@ passport.use(new GithubStrategy({
           user.name = user.name || profile.displayName;
           user.picture = user.picture || profile._json.avatar_url;
           user.github = profile.id;
+          user.token = accessToken;
+          user.username = profile.username
           user.save(function (err) {
             req.flash('success', { msg: 'Your Github account has been linked.' });
             done(err, user);
@@ -70,10 +73,10 @@ passport.use(new GithubStrategy({
             email: profile._json.email,
             location: profile._json.location,
             picture: profile._json.avatar_url,
-            github: profile.id
+            github: profile.id,
+            token: accessToken,
+            username: profile.username
           });
-          console.log(profile);
-          console.log(newUser);
           newUser.save(function (err) {
             done(err, newUser);
           });

@@ -69,5 +69,51 @@ var app = (function () {
     }
   }
 
-  return { inputFocus, checkRepoExists, showReadme, fetchReadme };
+  var fork = (link, url) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/fork-repo');
+    xhr.responseType = 'json';
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log(xhr.response)
+        console.log(link.parentElement.parentElement)
+        let messageExists = document.querySelector('.github-message');
+        if (xhr.response.authenticated === false) {
+          const forkContent = `
+          <div class="github-message">
+            <p>To fork this repo please <a href="/auth/github">sign in</a> with github or <a href="/auth/github">link</a> your github account</p>
+          </div>
+          `
+          link = link.parentElement.parentElement
+          if (!link.parentElement.querySelector('.github-message')) {
+            console.log("should be added");
+            link.parentElement.insertAdjacentHTML('beforeend', forkContent)
+            setTimeout(() => {
+              link.nextElementSibling.remove();
+            }, 4300);
+          }
+        } else {
+          var forkedRepo = link.parentElement.parentElement;
+          const forkContent = `
+            <div class="fork-in-progress">
+              <h1>forking ${forkedRepo.querySelector('.username').innerHTML}/${forkedRepo.querySelector('.name').innerHTML}</h1>
+              <h4>It shouldn't take too long </h4>
+              <img src="/img/forking.gif">
+            </div>
+          `
+          document.querySelector('.container').insertAdjacentHTML('beforeend', forkContent)
+          document.querySelector('body').style.overflow = 'hidden';
+
+          window.location.href = '/fork-repo/' + url;
+        }
+      }
+      else if (xhr.status !== 200) {
+        console.log('Request failed.  Returned status of ' + xhr.status);
+      }
+    }
+    xhr.send('repo=forked');
+  }
+
+  return { inputFocus, checkRepoExists, showReadme, fetchReadme, fork };
 })();

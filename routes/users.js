@@ -3,6 +3,9 @@ var User = require('../models/User');
 var { check, validationResult } = require('express-validator/check');
 var { matchedData, sanitize } = require('express-validator/filter');
 var api = require('./api');
+var request = require('request');
+const util = require('util');
+const setTimeoutPromise = util.promisify(setTimeout);
 
 /**
  * POST /login
@@ -90,8 +93,8 @@ exports.logout = function (req, res) {
 };
 
 // GET /profile
-exports.profile = function (req, res){
-  api.userProjects(req, res).then(function(data){
+exports.profile = function (req, res) {
+  api.userProjects(req, res).then(function (data) {
     res.render('profile');
   })
 }
@@ -125,10 +128,10 @@ exports.profilePut = function (req, res, next) {
 /**
  * GET /unlink/:provider
  */
-exports.unlink = function(req, res, next) {
-  User.findById(req.user.id, function(err, user) {
+exports.unlink = function (req, res, next) {
+  User.findById(req.user.id, function (err, user) {
     user.github = undefined;
-    user.save(function(err) {
+    user.save(function (err) {
       req.flash('success', { msg: 'Your account has been unlinked.' });
       res.redirect('/profile');
     });
@@ -155,7 +158,7 @@ exports.projects = function (req, res) {
 }
 
 // POST projects
-exports.projectsPost = function(req, res){
+exports.projectsPost = function (req, res) {
 
   var errors = validationResult(req);
 
@@ -181,11 +184,11 @@ exports.projectsPost = function(req, res){
 }
 
 // DELETE profile project
-exports.deleteProject = function(req, res){
+exports.deleteProject = function (req, res) {
   User.findById(req.user.id, function (err, user) {
-    user.projects.forEach(function(obj, i){
+    user.projects.forEach(function (obj, i) {
       console.log(obj);
-      if(obj._id == req.params.projectId){
+      if (obj._id == req.params.projectId) {
         user.projects[i].remove();
       }
     });
@@ -195,6 +198,35 @@ exports.deleteProject = function(req, res){
     })
   })
 }
+
+exports.checkAuth = function (req, res) {
+  if (!req.user || req.user == undefined || !req.user.github || req.user.github == undefined) {
+    res.send({
+      authenticated: false,
+    });
+  } else {
+    res.send({
+      authenticated: true,
+      redirect: "https://github.com/" + req.user.username
+    });
+  }
+}
+
+exports.forkProject = function (req, res){
+  request.post({
+    headers: {
+      'User-Agent': 'node'
+    },
+    url: 'https://api.github.com/repos/' + req.params.forkUrl.split("/").slice(-2).join("/") + '/forks' + '?access_token=' + req.user.token
+  }, function (error, response, body) {
+    setTimeoutPromise(4000).then(() => {
+      let forkedProject = JSON.parse(body);
+      res.redirect(forkedProject.html_url);
+    });
+  })
+}
+
+
 
 
 

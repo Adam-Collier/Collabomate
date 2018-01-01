@@ -25,7 +25,7 @@ var userSchema = new mongoose.Schema({
   github: String,
   vk: String,
   token: String,
-  rtoken: String,
+  username: String,
   projects: [{
     project: String,
     difficulty: String,

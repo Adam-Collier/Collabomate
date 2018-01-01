@@ -167,7 +167,7 @@ exports.projectsPost = function (req, res) {
     req.flash('error', errors.array());
     return res.redirect('/projects');
   }
-  
+
   console.log(req.body);
   req.user.projects.push({
     project: req.body.project,
@@ -199,26 +199,34 @@ exports.deleteProject = function (req, res) {
   })
 }
 
-exports.forkProject = function (req, res) {
-  console.log('https://api.github.com/repos/' + req.params.projectUrl.split("/").slice(-2).join("/") + '/forks' + '?access_token=' + req.user.token);
-  console.log(req.user);
-  if (req.user.github && req.user.github != undefined) {
-    request.post({
-      headers:{
-        'User-Agent': 'node'
-      },
-      url: 'https://api.github.com/repos/' + req.params.projectUrl.split("/").slice(-2).join("/") + '/forks' + '?access_token=' + req.user.token
-    }, function (error, response, body) {
-      console.log(body);
-      setTimeoutPromise(3000).then((value) => {
-        res.redirect('https://github.com');
-      });
+exports.checkAuth = function (req, res) {
+  if (!req.user || req.user == undefined || !req.user.github || req.user.github == undefined) {
+    res.send({
+      authenticated: false,
     });
-  }else{
-    console.log('github authenticated user not found');
-    res.redirect('/');
+  } else {
+    res.send({
+      authenticated: true,
+      redirect: "https://github.com/" + req.user.username
+    });
   }
 }
+
+exports.forkProject = function (req, res){
+  request.post({
+    headers: {
+      'User-Agent': 'node'
+    },
+    url: 'https://api.github.com/repos/' + req.params.forkUrl.split("/").slice(-2).join("/") + '/forks' + '?access_token=' + req.user.token
+  }, function (error, response, body) {
+    setTimeoutPromise(4000).then(() => {
+      let forkedProject = JSON.parse(body);
+      res.redirect(forkedProject.html_url);
+    });
+  })
+}
+
+
 
 
 

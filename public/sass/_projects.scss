@@ -29,7 +29,7 @@
   border-radius: 5px;
   margin: 0 auto;
   margin-bottom: 50px;
-  width: 700px;
+  width: 850px;
 }
 
 @for $i from 1 to 5 {
@@ -55,7 +55,7 @@
 .project > div:not(:nth-child(n+4)){
   display: flex;
   justify-content: space-between;
-  padding: 8px 24px;
+  padding: 8px 45px;
 }
 
 .project .name{
@@ -93,7 +93,7 @@
   width: calc(100% - 18px);
   background: rgb(243, 243, 243);
   border-radius: 5px;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
   margin-left: -4px;
   line-height: 1.5;
   font-size: 0.8em;
@@ -138,7 +138,7 @@
 .md{
   position: relative;
   z-index: 0;
-  padding: 24px;
+  padding: 45px;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   transition: all ease-in-out 500ms;
@@ -169,7 +169,7 @@
 }
 
 .github-message{
-  width: 652px;
+  width: 802px;
   margin: 0 auto;
   background: #ffcdd2;
   color: #b61b17;

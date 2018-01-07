@@ -28,6 +28,7 @@ var userSchema = new mongoose.Schema({
   username: String,
   projects: [{
     project: String,
+    created: Date,
     difficulty: String,
     comment: String
   }],

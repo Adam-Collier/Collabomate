@@ -104,7 +104,6 @@ var app = (function () {
           `
           document.querySelector('.container').insertAdjacentHTML('beforeend', forkContent)
           document.querySelector('body').style.overflow = 'hidden';
-
           window.location.href = '/fork-repo/' + url;
         }
       }
@@ -115,5 +114,20 @@ var app = (function () {
     xhr.send('repo=forked');
   }
 
-  return { inputFocus, checkRepoExists, showReadme, fetchReadme, fork };
+  var sortProjects = (select) => {
+    var selectVal = select.value
+    console.log(window.location + '?sort=' + select.value)
+    fetch(window.location + '?sort=' + select.value)
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+        data = document.createRange().createContextualFragment(data)
+        data = data.querySelector('.projects');
+        console.log(data);
+        document.querySelector('.projects').innerHTML = '';
+        document.querySelector('.projects').appendChild(data);
+      })
+  }
+  return { inputFocus, checkRepoExists, showReadme, fetchReadme, fork, sortProjects };
 })();

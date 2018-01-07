@@ -1,3 +1,45 @@
+@keyframes github-link-show{
+  0%{
+    transform: translateY(50px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+
+@keyframes github-link-hide{
+  0%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(50px);
+  }
+}
+
+.github-message{
+  width: 802px;
+  margin: 0 auto;
+  background: #ffcdd2;
+  color: #b61b17;
+  padding: 5px 3px 9px 45px;
+  position: absolute;
+  left: 0;
+  bottom: calc(100% - 5px);
+  z-index: 0;
+  border-radius: 5px;
+  animation: github-link-show 250ms ease-in-out forwards, github-link-hide 300ms 4s ease-in-out forwards;
+}
+
+.github-message p{
+  font-size: 0.8em;
+  margin: 0px;
+}
+
+.github-message a{
+  color: #b61b17;
+  cursor: pointer;
+}
+
 .fork-in-progress{
   position: fixed;
   top: 0;

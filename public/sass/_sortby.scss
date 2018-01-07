@@ -1,0 +1,35 @@
+.sortby{
+  display: block;
+  position: relative;
+  text-align: right;
+  margin-bottom: 28px;
+}
+
+.sortby label{
+  display: inline-block;
+  padding: 8px 20px;
+  border: 1px solid #DFDFDF;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.sortby select{
+  display: inline-block;
+  -webkit-appearance: none;
+  padding: 8px 80px 8px 20px;
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #DFDFDF;
+  border-left: none;
+  cursor: pointer;
+  &:focus{
+    outline: none;
+  }
+}
+
+.sortby svg{
+  position: absolute;
+  right: 10px;
+  top: 57%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+}
+

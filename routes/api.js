@@ -12,6 +12,7 @@ function getAllDataForProj(proj) {
         return response.json();
       }),
     {
+      created: new Date(),
       difficulty: proj.difficulty,
       comment: proj.comment,
       id: proj._id
@@ -48,12 +49,13 @@ exports.userProjects = function (request, response) {
 
 exports.api = function (req, res) {
   // find all of the projects from all users
-  return User.find({}, { _id: 0, projects: 1 }, function (err, users) {
+  return User.find({}, { _id: 0, projects: 1, createdAt: 1 }, function (err, users) {
     if (err) {
       res.send(err);
     }
     return users;
-  }).then((users) => {
+  })
+  .then((users) => {
     var allProjs = users.reduce((acc, curr) => acc.concat(curr.projects), []);
     return Promise.all(allProjs.map((obj) => {
       return getAllDataForProj(obj).catch((err) => console.log(err));
@@ -68,6 +70,7 @@ exports.api = function (req, res) {
               languages: Object.keys(curr[1]).reduce((str, lang) => str + ' ' + lang, ''),
               difficulty: curr[2].difficulty,
               comment: curr[2].comment,
+              created: curr[2].created
             })
           }
           return acc;
